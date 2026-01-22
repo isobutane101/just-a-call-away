@@ -471,6 +471,8 @@ h1, h2, h3 {
     border: 1px solid var(--warm-gray);
     transition: all 0.3s;
     position: relative;
+    display: flex;
+    flex-direction: column;
 }
 
 .resource-card::before {
@@ -538,6 +540,7 @@ h1, h2, h3 {
     color: var(--text-light);
     line-height: 1.65;
     border-top: 1px solid var(--warm-gray);
+    flex: 1;
 }
 
 .resource-actions {
