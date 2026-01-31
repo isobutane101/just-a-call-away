@@ -751,11 +751,18 @@ h1, h2, h3 {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transform: scale(2);
+}
+
+/* Adjust Adi's photo - zoom out slightly and center */
+.adi-photo img {
+    transform: scale(1.6);
+    object-position: center center;
 }
 
 /* Crop Aarav's photo to match Adi's headshot level */
 .aarav-photo img {
-    object-position: center 15%;
+    object-position: center 25%;
 }
 
 .team-photo-placeholder {
