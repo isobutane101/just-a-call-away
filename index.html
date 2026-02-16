@@ -31,6 +31,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
 
+    <!-- Leaflet.js for Map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
     <!-- Stylesheet -->
     <link rel="stylesheet" href="styles.css">
 
@@ -55,6 +59,7 @@
                 <li><a href="#mission" class="nav-link">Mission</a></li>
                 <li><a href="#team" class="nav-link">Team</a></li>
                 <li><a href="#get-involved" class="nav-link">Get Involved</a></li>
+                <li><a href="#flyer-map" class="nav-link">Flyer Map</a></li>
             </ul>
         </div>
     </nav>
@@ -258,6 +263,143 @@
         </div>
     </section>
 
+    <!-- Flyer Distribution Map Section -->
+    <section id="flyer-map" class="section flyer-map-section">
+        <div class="container">
+            <h2 class="section-title">Flyer Distribution Map</h2>
+            <p class="section-subtitle">
+                These are all of the places where our flyers have been distributed
+            </p>
+
+            <div class="map-container">
+                <div id="distribution-map"></div>
+            </div>
+
+            <div class="flyer-form-wrapper">
+                <h3 class="flyer-form-title">Hung up a flyer? Let us know!</h3>
+                <p class="flyer-form-subtitle">Report where you distributed a flyer and we'll add it to the map.</p>
+                <form id="flyer-report-form" class="flyer-report-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="reporter-name">Your Name</label>
+                            <input type="text" id="reporter-name" name="name" placeholder="Jane Doe" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="reporter-email">Email (optional)</label>
+                            <input type="email" id="reporter-email" name="email" placeholder="jane@example.com">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="flyer-address">Address where you hung the flyer</label>
+                        <input type="text" id="flyer-address" name="address" placeholder="e.g. 123 Main St, Bellevue, WA 98004" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="flyer-location-name">Location Name (optional)</label>
+                        <input type="text" id="flyer-location-name" name="location_name" placeholder="e.g. Bellevue Library, Local Grocery Store">
+                    </div>
+                    <div class="form-group">
+                        <label for="flyer-language">Which flyer language(s)?</label>
+                        <select id="flyer-language" name="language">
+                            <option value="english">English</option>
+                            <option value="hindi">Hindi</option>
+                            <option value="gujarati">Gujarati</option>
+                            <option value="multiple">Multiple Languages</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary flyer-submit-btn">Submit Flyer Report</button>
+                </form>
+                <div id="form-success" class="form-success" style="display: none;">
+                    Thank you for distributing our flyers! We'll review your submission and add it to the map.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+    // Initialize the map centered on the Bellevue/Eastside area
+    var map = L.map('distribution-map').setView([47.6500, -122.1300], 12);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        maxZoom: 18
+    }).addTo(map);
+
+    // Custom gold marker icon
+    var goldIcon = L.divIcon({
+        className: 'custom-map-pin',
+        html: '<div class="pin-marker"><div class="pin-dot"></div></div>',
+        iconSize: [30, 40],
+        iconAnchor: [15, 40],
+        popupAnchor: [0, -42]
+    });
+
+    // Flyer distribution locations
+    var locations = [
+        {
+            name: "Crossroads Mall",
+            lat: 47.6195,
+            lng: -122.1303,
+            address: "15600 NE 8th St, Bellevue, WA 98008"
+        },
+        {
+            name: "ISKCON Temple (Bel-Red)",
+            lat: 47.6227,
+            lng: -122.1638,
+            address: "Bel-Red Rd, Bellevue, WA 98005"
+        },
+        {
+            name: "Veda Sri Venkateswara Temple",
+            lat: 47.6699,
+            lng: -122.0643,
+            address: "7305 208th Ave NE, Redmond, WA 98053"
+        },
+        {
+            name: "BAPS Shri Swaminarayan Mandir",
+            lat: 47.6864,
+            lng: -122.1337,
+            address: "15440 NE 95th St, Redmond, WA 98052"
+        }
+    ];
+
+    locations.forEach(function(loc) {
+        L.marker([loc.lat, loc.lng], { icon: goldIcon })
+            .addTo(map)
+            .bindPopup('<strong>' + loc.name + '</strong><br>' + loc.address);
+    });
+
+    // Form submission handler
+    document.getElementById('flyer-report-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        var form = e.target;
+        var data = new FormData(form);
+
+        fetch('https://formspree.io/f/adidesai1909@gmail.com', {
+            method: 'POST',
+            body: data,
+            headers: { 'Accept': 'application/json' }
+        }).then(function(response) {
+            if (response.ok) {
+                form.style.display = 'none';
+                document.getElementById('form-success').style.display = 'block';
+            }
+        }).catch(function() {
+            // Fallback: open mailto
+            var name = data.get('name');
+            var address = data.get('address');
+            var locationName = data.get('location_name');
+            var language = data.get('language');
+            var subject = encodeURIComponent('Flyer Distribution Report');
+            var body = encodeURIComponent(
+                'Name: ' + name + '\n' +
+                'Address: ' + address + '\n' +
+                'Location: ' + locationName + '\n' +
+                'Language: ' + language
+            );
+            window.location.href = 'mailto:adidesai1909@gmail.com?subject=' + subject + '&body=' + body;
+        });
+    });
+    </script>
+
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
@@ -273,6 +415,7 @@
                         <li><a href="#resources">Resources</a></li>
                         <li><a href="#mission">Mission</a></li>
                         <li><a href="#team">Team</a></li>
+                        <li><a href="#flyer-map">Flyer Map</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">

@@ -884,6 +884,170 @@ h1, h2, h3 {
 }
 
 /* ============================================
+   FLYER DISTRIBUTION MAP
+   ============================================ */
+.flyer-map-section {
+    background: var(--off-white);
+    border-top: 1px solid var(--warm-gray);
+}
+
+.map-container {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--warm-gray);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    margin-bottom: 3rem;
+}
+
+#distribution-map {
+    height: 450px;
+    width: 100%;
+}
+
+/* Custom map pin */
+.custom-map-pin .pin-marker {
+    width: 30px;
+    height: 40px;
+    position: relative;
+}
+
+.custom-map-pin .pin-marker::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 24px;
+    height: 24px;
+    background: var(--gold);
+    border: 3px solid var(--gold-dark);
+    border-radius: 50% 50% 50% 0;
+    transform: translateX(-50%) rotate(-45deg);
+    box-shadow: 0 2px 8px rgba(212, 175, 55, 0.5);
+}
+
+.custom-map-pin .pin-dot {
+    position: absolute;
+    top: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 8px;
+    height: 8px;
+    background: var(--white);
+    border-radius: 50%;
+    z-index: 1;
+}
+
+.flyer-form-wrapper {
+    max-width: 650px;
+    margin: 0 auto;
+    background: var(--white);
+    border-radius: 12px;
+    padding: 2.5rem;
+    border: 1px solid var(--warm-gray);
+    position: relative;
+    overflow: hidden;
+}
+
+.flyer-form-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+}
+
+.flyer-form-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--charcoal);
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.flyer-form-subtitle {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.flyer-report-form .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.flyer-report-form .form-group {
+    margin-bottom: 1.25rem;
+}
+
+.flyer-report-form label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--charcoal);
+    margin-bottom: 0.4rem;
+}
+
+.flyer-report-form input,
+.flyer-report-form select {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--warm-gray);
+    border-radius: 8px;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 0.9rem;
+    color: var(--charcoal);
+    background: var(--off-white);
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.flyer-report-form input:focus,
+.flyer-report-form select:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
+}
+
+.flyer-report-form input::placeholder {
+    color: #aaa;
+}
+
+.flyer-submit-btn {
+    width: 100%;
+    margin-top: 0.5rem;
+    padding: 1rem;
+    font-size: 1rem;
+}
+
+.form-success {
+    text-align: center;
+    padding: 2rem;
+    color: var(--gold-dark);
+    font-size: 1.1rem;
+    font-weight: 500;
+    line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+    #distribution-map {
+        height: 350px;
+    }
+
+    .flyer-form-wrapper {
+        padding: 1.5rem;
+    }
+
+    .flyer-report-form .form-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ============================================
    FOOTER
    ============================================ */
 .footer {
