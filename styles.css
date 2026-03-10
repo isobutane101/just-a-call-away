@@ -276,6 +276,24 @@ h1, h2, h3 {
     opacity: 0.8;
 }
 
+@media (max-width: 768px) {
+    .featured-banner {
+        padding: 2rem 1rem;
+    }
+
+    .featured-source {
+        font-size: 1.6rem;
+    }
+
+    .featured-headline {
+        font-size: 1.05rem;
+    }
+
+    .featured-excerpt {
+        font-size: 0.9rem;
+    }
+}
+
 /* ============================================
    HERO SECTION
    ============================================ */
